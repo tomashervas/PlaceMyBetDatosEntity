@@ -30,8 +30,8 @@ namespace PlaceMyBetAPIWeb.Models
                 List<Evento> eventos = new List<Evento>();
                 while (res.Read())
                 {
-                    Console.WriteLine("Recuperado " + res.GetInt32(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetDateTime(3));
-                    e = new Evento(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetDateTime(3), 20);
+                    //Console.WriteLine("Recuperado " + res.GetInt32(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetDateTime(3));
+                    e = new Evento(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetDateTime(3));
                     eventos.Add(e);
                 }
                 conexion.Close();
@@ -42,11 +42,34 @@ namespace PlaceMyBetAPIWeb.Models
                 Console.WriteLine("Se ha producido un error de conexion");
                 return null;
             }
-            
-            /*
-            DateTime date1 = new DateTime(2020, 6, 1, 7, 47, 0);
-            Evento even1 = new Evento(1, "valencia", "madrid", date1.Date, date1.Hour);
-            return even1;*/
+        }
+
+        internal List<EventoDTO> RecuperarDTO()
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "select * from evento";
+
+            try
+            {
+                conexion.Open();
+                MySqlDataReader res = comando.ExecuteReader();
+
+                EventoDTO e = null;
+                List<EventoDTO> eventos = new List<EventoDTO>();
+                while (res.Read())
+                {
+                    e = new EventoDTO(res.GetString(1), res.GetString(2));
+                    eventos.Add(e);
+                }
+                conexion.Close();
+                return eventos;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexion");
+                return null;
+            }
         }
     }
 }

@@ -30,8 +30,35 @@ namespace PlaceMyBetAPIWeb.Models
                 List<Mercado> mercados = new List<Mercado>();
                 while (res.Read())
                 {
-                    //Console.WriteLine("Recuperado " + res.GetInt32(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetDateTime(3));
                     m = new Mercado(res.GetInt32(0), res.GetString(1), res.GetDouble(2), res.GetDouble(3), res.GetDouble(4), res.GetDouble(5));
+                    mercados.Add(m);
+                }
+                conexion.Close();
+                return mercados;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexion");
+                return null;
+            }
+        }
+
+        internal List<MercadoDTO> RecuperarDTO()
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "select * from mercado";
+
+            try
+            {
+                conexion.Open();
+                MySqlDataReader res = comando.ExecuteReader();
+
+                MercadoDTO m = null;
+                List<MercadoDTO> mercados = new List<MercadoDTO>();
+                while (res.Read())
+                {
+                    m = new MercadoDTO(res.GetString(1), res.GetDouble(2), res.GetDouble(3));
                     mercados.Add(m);
                 }
                 conexion.Close();

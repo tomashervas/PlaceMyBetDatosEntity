@@ -24,4 +24,18 @@ namespace PlaceMyBetAPIWeb.Models
         public double dineroOver { get; set; }
         public double dineroUnder { get; set; }
     }
+
+    public class MercadoDTO
+    {
+        public MercadoDTO(string mercado, double cuotaOver, double cuotaUnder)
+        {
+            this.mercado = mercado;
+            this.cuotaOver = cuotaOver;
+            this.cuotaUnder = cuotaUnder;
+        }
+
+        public string mercado { get; set; }
+        public double cuotaOver { get; set; }
+        public double cuotaUnder { get; set; }
+    }
 }
