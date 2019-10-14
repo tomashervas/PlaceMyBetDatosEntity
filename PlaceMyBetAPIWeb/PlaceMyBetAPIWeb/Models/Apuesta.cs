@@ -40,4 +40,27 @@ namespace PlaceMyBetAPIWeb.Models
         public double dinero { get; set; }
         public string emailUsuario { get; set; }
     }
+
+    public class ApuestaDTOInsertar
+    {
+        public ApuestaDTOInsertar(string mercado, string tipo, double cuota, double dinero, int idMercado, int idUsuario)
+        {
+            
+            this.mercado = mercado;
+            this.tipo = tipo;
+            this.cuota = cuota;
+            this.dinero = dinero;
+            this.IDMercado = idMercado;
+            this.IDUsuario = idUsuario;
+
+        }
+
+        
+        public string mercado { get; set; }
+        public string tipo { get; set; }
+        public double cuota { get; set; }
+        public double dinero { get; set; }
+        public int IDMercado { get; set; }
+        public int IDUsuario { get; set; }
+    }
 }

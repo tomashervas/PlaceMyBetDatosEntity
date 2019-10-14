@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -70,7 +71,41 @@ namespace PlaceMyBetAPIWeb.Models
                 return null;
             }
         }
-    }
 
-    //SELECT mercado, tipo, cuota, dinero, email FROM apuestas, usuarios WHERE apuestas.IDUsuario = usuarios.ID
+        internal void GaurdarApuesta(ApuestaDTOInsertar a)
+        {
+            CultureInfo culInfo = new System.Globalization.CultureInfo("es-ES");
+            culInfo.NumberFormat.NumberDecimalSeparator = ".";
+            culInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+            culInfo.NumberFormat.PercentDecimalSeparator = ".";
+            culInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+            System.Threading.Thread.CurrentThread.CurrentCulture = culInfo;
+
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO `apuestas` (`mercado`, `tipo`, `cuota`, `dinero`, `IDMercado`, `IDUsuario`) VALUES ('" + a.mercado + "', '"+a.tipo+"', '"+a.cuota+"', '"+a.dinero+"', '"+a.IDMercado+"', '"+a.IDUsuario+"');";
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+                conexion.Close();
+            }
+            catch(MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexión");
+            }
+        }
+
+        /*	{
+                "mercado": "1.5",
+                "tipo": "under",
+                "cuota": 1.4,
+                "dinero": 40,
+                "IDMercado": 1,
+                "IDUsuario": 2
+            }*/
+
+    }
 }
+ 
+ 
