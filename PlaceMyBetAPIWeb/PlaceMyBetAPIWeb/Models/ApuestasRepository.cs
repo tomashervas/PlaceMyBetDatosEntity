@@ -30,7 +30,6 @@ namespace PlaceMyBetAPIWeb.Models
                 List<Apuesta> apuestas = new List<Apuesta>();
                 while (res.Read())
                 {
-                    //Console.WriteLine("Recuperado " + res.GetInt32(0) + " " + res.GetString(1) + " " + res.GetString(2) + " " + res.GetDateTime(3));
                     a = new Apuesta(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetDouble(3), res.GetDouble(4));
                     apuestas.Add(a);
                 }
@@ -43,5 +42,35 @@ namespace PlaceMyBetAPIWeb.Models
                 return null;
             }
         }
+
+        internal List<ApuestaDTO> RecuperarDTO()
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT mercado, tipo, cuota, dinero, email FROM apuestas, usuarios WHERE apuestas.IDUsuario = usuarios.ID";
+
+            try
+            {
+                conexion.Open();
+                MySqlDataReader res = comando.ExecuteReader();
+
+                ApuestaDTO a = null;
+                List<ApuestaDTO> apuestas = new List<ApuestaDTO>();
+                while (res.Read())
+                {
+                    a = new ApuestaDTO(res.GetString(0), res.GetString(1), res.GetDouble(2), res.GetDouble(3), res.GetString(4));
+                    apuestas.Add(a);
+                }
+                conexion.Close();
+                return apuestas;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexion");
+                return null;
+            }
+        }
     }
+
+    //SELECT mercado, tipo, cuota, dinero, email FROM apuestas, usuarios WHERE apuestas.IDUsuario = usuarios.ID
 }
