@@ -21,6 +21,16 @@ namespace PlaceMyBetAPIWeb.Models
         public string tipo { get; set; }
         public double cuota { get; set; }
         public double dinero { get; set; }
+
+        public static double CalculoCuota (double dinero, double dineroOver, double dineroUnder)
+        {
+            double cuota;
+            double total = dineroOver + dineroUnder;
+            double probabilidad = dinero / total;
+            cuota = (1 / probabilidad) * 0.95;
+
+            return cuota;
+        }
     }
 
     public class ApuestaDTO

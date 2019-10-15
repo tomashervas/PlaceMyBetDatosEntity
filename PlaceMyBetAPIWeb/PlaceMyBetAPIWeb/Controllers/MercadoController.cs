@@ -19,9 +19,11 @@ namespace PlaceMyBetAPIWeb.Controllers
         }
 
         // GET: api/Mercado/5
-        public string Get(int id)
+        public Mercado Get(int id)
         {
-            return "value";
+            var repoMercado = new MercadoRepository();
+            Mercado m = repoMercado.RecuperarMercado(id);
+            return m;
         }
 
         // POST: api/Mercado

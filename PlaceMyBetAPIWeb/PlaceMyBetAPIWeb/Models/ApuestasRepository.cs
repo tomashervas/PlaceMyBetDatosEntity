@@ -72,7 +72,7 @@ namespace PlaceMyBetAPIWeb.Models
             }
         }
 
-        internal void GaurdarApuesta(ApuestaDTOInsertar a)
+        internal void GuardarApuesta(ApuestaDTOInsertar a)
         {
             CultureInfo culInfo = new System.Globalization.CultureInfo("es-ES");
             culInfo.NumberFormat.NumberDecimalSeparator = ".";
@@ -93,6 +93,20 @@ namespace PlaceMyBetAPIWeb.Models
             catch(MySqlException e)
             {
                 Console.WriteLine("Se ha producido un error de conexión");
+            }
+
+            MercadoRepository repoMercado = new MercadoRepository();
+            Mercado mercado = repoMercado.RecuperarMercado(a.IDMercado);
+            Console.WriteLine(mercado.mercadoID + " " + mercado.cuotaOver + " " + mercado.dineroOver);
+            if(a.tipo == "over")
+            {
+                mercado.dineroOver = mercado.dineroOver + a.dinero;
+                mercado.cuotaOver = Math.Round(Apuesta.CalculoCuota(mercado.dineroOver, mercado.dineroOver, mercado.dineroUnder),2);
+            }
+            else
+            {
+                mercado.dineroUnder = mercado.dineroUnder + a.dinero;
+                mercado.cuotaUnder = Math.Round(Apuesta.CalculoCuota(mercado.dineroUnder, mercado.dineroOver, mercado.dineroUnder),2);
             }
         }
 

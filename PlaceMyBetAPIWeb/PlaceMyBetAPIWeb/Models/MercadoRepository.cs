@@ -70,5 +70,33 @@ namespace PlaceMyBetAPIWeb.Models
                 return null;
             }
         }
+
+        internal Mercado RecuperarMercado(int id)
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "select * from mercado where mercado.ID = @id";
+            comando.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                conexion.Open();
+                MySqlDataReader res = comando.ExecuteReader();
+                Mercado mercado = null;
+                if (res.Read())
+                {
+                    mercado = new Mercado(res.GetInt32(0), res.GetString(1), res.GetDouble(2), res.GetDouble(3), res.GetDouble(4), res.GetDouble(5));
+                }
+                conexion.Close();
+                return mercado;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexion");
+                return null;
+            }
+        }
+
+        //UPDATE `mercado` SET `cuotaOver` = '1.41', `dineroOver` = '115' WHERE `mercado`.`ID` = 1;
     }
 }

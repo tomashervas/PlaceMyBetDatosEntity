@@ -28,7 +28,7 @@ namespace PlaceMyBetAPIWeb.Controllers
         public void Post([FromBody]ApuestaDTOInsertar apuesta)
         {
             var repoApuestas = new ApuestasRepository();
-            repoApuestas.GaurdarApuesta(apuesta);
+            repoApuestas.GuardarApuesta(apuesta);
         }
 
         // PUT: api/Apuestas/5
