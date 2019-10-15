@@ -114,7 +114,5 @@ namespace PlaceMyBetAPIWeb.Models
                 Console.WriteLine("Se ha producido un error de conexión");
             }
         }
-
-        //UPDATE `mercado` SET `cuotaOver` = '1.41', `dineroOver` = '115' WHERE `mercado`.`ID` = 1;
     }
 }
