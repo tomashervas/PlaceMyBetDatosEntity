@@ -97,6 +97,24 @@ namespace PlaceMyBetAPIWeb.Models
             }
         }
 
+        internal void ActualizarMercado(Mercado mercado)
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            
+            comando.CommandText = "UPDATE `mercado` SET `cuotaOver` = '"+ mercado.cuotaOver +"', cuotaUnder = '" + mercado.cuotaUnder + "', `dineroOver` = '" + mercado.dineroOver + "', dineroUnder = '"+ mercado.dineroUnder +"' WHERE mercado.ID = " + mercado.mercadoID +";";
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+                conexion.Close();
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexión");
+            }
+        }
+
         //UPDATE `mercado` SET `cuotaOver` = '1.41', `dineroOver` = '115' WHERE `mercado`.`ID` = 1;
     }
 }

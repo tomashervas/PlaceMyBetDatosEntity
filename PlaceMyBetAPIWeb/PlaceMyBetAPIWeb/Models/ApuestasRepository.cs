@@ -97,17 +97,22 @@ namespace PlaceMyBetAPIWeb.Models
 
             MercadoRepository repoMercado = new MercadoRepository();
             Mercado mercado = repoMercado.RecuperarMercado(a.IDMercado);
-            Console.WriteLine(mercado.mercadoID + " " + mercado.cuotaOver + " " + mercado.dineroOver);
-            if(a.tipo == "over")
+            //Console.WriteLine(mercado.mercadoID + " " + mercado.cuotaOver + " " + mercado.dineroOver);
+            if(a.tipo.ToLower() == "over")
             {
                 mercado.dineroOver = mercado.dineroOver + a.dinero;
                 mercado.cuotaOver = Math.Round(Apuesta.CalculoCuota(mercado.dineroOver, mercado.dineroOver, mercado.dineroUnder),2);
+                mercado.cuotaUnder = Math.Round(Apuesta.CalculoCuota(mercado.dineroUnder, mercado.dineroOver, mercado.dineroUnder),2);
             }
             else
             {
                 mercado.dineroUnder = mercado.dineroUnder + a.dinero;
                 mercado.cuotaUnder = Math.Round(Apuesta.CalculoCuota(mercado.dineroUnder, mercado.dineroOver, mercado.dineroUnder),2);
+                mercado.cuotaOver = Math.Round(Apuesta.CalculoCuota(mercado.dineroOver, mercado.dineroOver, mercado.dineroUnder),2);
             }
+
+            repoMercado.ActualizarMercado(mercado);
+
         }
 
         /*	{
