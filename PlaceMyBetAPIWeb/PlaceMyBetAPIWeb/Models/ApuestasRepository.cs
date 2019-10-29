@@ -72,6 +72,62 @@ namespace PlaceMyBetAPIWeb.Models
             }
         }
 
+        internal List<ApuestaDTO> RecuperarXMercadoDTO(int idMercado)
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT mercado, tipo, cuota, dinero, email FROM apuestas, usuarios WHERE apuestas.IDUsuario = usuarios.ID and IDMercado=@idMercado";
+            comando.Parameters.AddWithValue("@idMercado", idMercado);
+            try
+            {
+                conexion.Open();
+                MySqlDataReader res = comando.ExecuteReader();
+
+                ApuestaDTO a = null;
+                List<ApuestaDTO> apuestas = new List<ApuestaDTO>();
+                while (res.Read())
+                {
+                    a = new ApuestaDTO(res.GetString(0), res.GetString(1), res.GetDouble(2), res.GetDouble(3), res.GetString(4));
+                    apuestas.Add(a);
+                }
+                conexion.Close();
+                return apuestas;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexion");
+                return null;
+            }
+        }
+
+        internal List<ApuestaXEmailDTO> RecuperarXEmail(string email)
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT evento.ID, evento.local, evento.visitante, apuestas.mercado, apuestas.tipo, apuestas.cuota, apuestas.dinero FROM apuestas INNER JOIN mercado ON apuestas.IDMercado = mercado.ID INNER JOIN evento on evento.ID=mercado.IDEvento INNER JOIN usuarios on apuestas.IDUsuario = usuarios.ID AND usuarios.email=@email;";
+            comando.Parameters.AddWithValue("@email", email);
+            try
+            {
+                conexion.Open();
+                MySqlDataReader res = comando.ExecuteReader();
+
+                ApuestaXEmailDTO a = null;
+                List<ApuestaXEmailDTO> apuestas = new List<ApuestaXEmailDTO>();
+                while (res.Read())
+                {
+                    a = new ApuestaXEmailDTO(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetString(3), res.GetString(4), res.GetDouble(5), res.GetDouble(6));
+                    apuestas.Add(a);
+                }
+                conexion.Close();
+                return apuestas;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexion");
+                return null;
+            }
+        }
+
         internal void GuardarApuesta(ApuestaDTOInsertar a)
         {
             CultureInfo culInfo = new System.Globalization.CultureInfo("es-ES");

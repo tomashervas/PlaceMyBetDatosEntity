@@ -18,6 +18,23 @@ namespace PlaceMyBetAPIWeb.Controllers
             return apuestas;
         }
 
+        // Get: api/apuestas?idMercado=id
+        [Authorize(Roles ="admin")]
+        public IEnumerable<ApuestaDTO> GetXMercado(int idMercado)
+        {
+            var repoApuestas = new ApuestasRepository();
+            List<ApuestaDTO> apuestas = repoApuestas.RecuperarXMercadoDTO(idMercado);
+            return apuestas;
+        }
+
+        //GET: api/apuestas?email=email
+        public IEnumerable<ApuestaXEmailDTO> GetXEmail(string email)
+        {
+            var repoApuestas = new ApuestasRepository();
+            List<ApuestaXEmailDTO> apuestas = repoApuestas.RecuperarXEmail(email);
+            return apuestas;
+        }
+
         // GET: api/Apuestas/5
         public string Get(int id)
         {
@@ -25,6 +42,7 @@ namespace PlaceMyBetAPIWeb.Controllers
         }
 
         // POST: api/Apuestas
+        [Authorize]
         public void Post([FromBody]ApuestaDTOInsertar apuesta)
         {
             var repoApuestas = new ApuestasRepository();

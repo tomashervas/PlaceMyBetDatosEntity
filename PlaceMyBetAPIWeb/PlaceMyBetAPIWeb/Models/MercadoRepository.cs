@@ -71,6 +71,35 @@ namespace PlaceMyBetAPIWeb.Models
             }
         }
 
+        internal List<MercadoDTO> RecuperarXEventoDTO(int idEvento)
+        {
+            MySqlConnection conexion = Conexion();
+            MySqlCommand comando = conexion.CreateCommand();
+            comando.CommandText = "select * from mercado where IDEvento = @id";
+            comando.Parameters.AddWithValue("@id", idEvento);
+
+            try
+            {
+                conexion.Open();
+                MySqlDataReader res = comando.ExecuteReader();
+
+                MercadoDTO m = null;
+                List<MercadoDTO> mercados = new List<MercadoDTO>();
+                while (res.Read())
+                {
+                    m = new MercadoDTO(res.GetString(1), res.GetDouble(2), res.GetDouble(3));
+                    mercados.Add(m);
+                }
+                conexion.Close();
+                return mercados;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Se ha producido un error de conexion");
+                return null;
+            }
+        }
+
         internal Mercado RecuperarMercado(int id)
         {
             MySqlConnection conexion = Conexion();

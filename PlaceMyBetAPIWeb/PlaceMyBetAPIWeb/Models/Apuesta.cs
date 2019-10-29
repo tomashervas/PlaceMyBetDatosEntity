@@ -73,4 +73,26 @@ namespace PlaceMyBetAPIWeb.Models
         public int IDMercado { get; set; }
         public int IDUsuario { get; set; }
     }
+
+    public class ApuestaXEmailDTO
+    {
+        public ApuestaXEmailDTO(int idEvento, string local, string visitante, string mercado, string tipo, double cuota, double dinero)
+        {
+            this.idEvento = idEvento;
+            this.local = local;
+            this.visitante = visitante;
+            this.mercado = mercado;
+            this.tipo = tipo;
+            this.cuota = cuota;
+            this.dinero = dinero;
+        }
+
+        public int idEvento { get; set; }
+        public string local { get; set; }
+        public string visitante { get; set; }
+        public string mercado { get; set; }
+        public string tipo { get; set; }
+        public double cuota { get; set; }
+        public double dinero { get; set; }
+    }
 }
