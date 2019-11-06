@@ -7,7 +7,18 @@ namespace PlaceMyBetAPIWeb.Models
 {
     public class Mercado
     {
-        public Mercado(int mercadoID, string mercado, double cuotaOver, double cuotaUnder, double dineroOver, double dineroUnder)
+        public int mercadoID { get; set; }
+        public string mercado { get; set; }
+        public double cuotaOver { get; set; }
+        public double cuotaUnder { get; set; }
+        public double dineroOver { get; set; }
+        public double dineroUnder { get; set; }
+        public int eventoID { get; set; }
+
+        public Evento Evento { get; set; }
+        public List<Apuesta> Apuesta { get; set; }
+
+        public Mercado(int mercadoID, string mercado, double cuotaOver, double cuotaUnder, double dineroOver, double dineroUnder, int eventoID)
         {
             this.mercadoID = mercadoID;
             this.mercado = mercado;
@@ -15,16 +26,17 @@ namespace PlaceMyBetAPIWeb.Models
             this.cuotaUnder = cuotaUnder;
             this.dineroOver = dineroOver;
             this.dineroUnder = dineroUnder;
+            this.eventoID = eventoID;
         }
 
-        public int mercadoID { get; set; }
-        public string mercado { get; set; }
-        public double cuotaOver { get; set; }
-        public double cuotaUnder { get; set; }
-        public double dineroOver { get; set; }
-        public double dineroUnder { get; set; }
-    }
+        public Mercado()
+        {
+            //Constructor vacio
+        }
 
+        
+    }
+    /*
     public class MercadoDTO
     {
         public MercadoDTO(string mercado, double cuotaOver, double cuotaUnder)
@@ -37,5 +49,5 @@ namespace PlaceMyBetAPIWeb.Models
         public string mercado { get; set; }
         public double cuotaOver { get; set; }
         public double cuotaUnder { get; set; }
-    }
+    }*/
 }
