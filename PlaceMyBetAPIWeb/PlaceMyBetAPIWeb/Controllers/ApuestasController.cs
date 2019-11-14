@@ -42,14 +42,14 @@ namespace PlaceMyBetAPIWeb.Controllers
             Apuesta a = repoApuesta.RecuperarApuesta(id);
             return a;
         }
-        /*
-        // POST: api/Apuestas
-        [Authorize]
-        public void Post([FromBody]ApuestaDTOInsertar apuesta)
+       
+        //POST: api/Apuestas
+        //[Authorize]
+        public void Post([FromBody]Apuesta apuesta)
         {
             var repoApuestas = new ApuestasRepository();
             repoApuestas.GuardarApuesta(apuesta);
-        }*/
+        }
 
         // PUT: api/Apuestas/5
         public void Put(int id, [FromBody]string value)

@@ -33,10 +33,8 @@ namespace PlaceMyBetAPIWeb.Models
         {
             //Constructor vacio
         }
-
-        
     }
-    /*
+
     public class MercadoDTO
     {
         public MercadoDTO(string mercado, double cuotaOver, double cuotaUnder)
@@ -49,5 +47,15 @@ namespace PlaceMyBetAPIWeb.Models
         public string mercado { get; set; }
         public double cuotaOver { get; set; }
         public double cuotaUnder { get; set; }
-    }*/
+    }
 }
+
+/*
+  {
+  "mercado" : "3.5",
+  "cuotaOver" : 1.9,
+  "cuotaUnder" : 1.9,
+  "dineroOver" : 100,
+  "dineroUnder" : 100,
+  "eventoID" : 1
+}*/

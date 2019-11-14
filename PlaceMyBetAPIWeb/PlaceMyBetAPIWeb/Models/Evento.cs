@@ -28,8 +28,7 @@ namespace PlaceMyBetAPIWeb.Models
 
         
     }
-    /*
-    //Devuelve sólo los nombres de los equipos
+
     public class EventoDTO
     {
         public EventoDTO(string local, string visitante)
@@ -40,5 +39,6 @@ namespace PlaceMyBetAPIWeb.Models
 
         public string local { get; set; }
         public string visitante { get; set; }
-    }*/
+    }
+
 }

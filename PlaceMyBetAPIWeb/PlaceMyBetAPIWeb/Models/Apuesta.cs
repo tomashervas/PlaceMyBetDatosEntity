@@ -35,7 +35,7 @@ namespace PlaceMyBetAPIWeb.Models
             //Constructor vacio
         }
 
-        /*
+        
         public static double CalculoCuota (double dinero, double dineroOver, double dineroUnder)
         {
             double cuota;
@@ -44,7 +44,7 @@ namespace PlaceMyBetAPIWeb.Models
             cuota = (1 / probabilidad) * 0.95;
 
             return cuota;
-        }*/
+        }
     }
     /*
     public class ApuestaDTO
