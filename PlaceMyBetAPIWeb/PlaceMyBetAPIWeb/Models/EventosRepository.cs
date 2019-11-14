@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,26 @@ namespace PlaceMyBetAPIWeb.Models
             }
             return eventos;
         }
+
+        internal void Actualizar(int id, Evento evento)
+        {
+            PlaceMyBetContext context = new PlaceMyBetContext();
+            var eventoActualizar = context.Eventos.FirstOrDefault(ev => ev.eventoID == id);
+            eventoActualizar.local = evento.local;
+            eventoActualizar.visitante = evento.visitante;
+            context.SaveChanges();
+            
+        }
+
+        internal void Borrar(int id)
+        {
+            PlaceMyBetContext context = new PlaceMyBetContext();
+            var eventoEliminar = context.Eventos.FirstOrDefault(ev => ev.eventoID == id);
+            context.Eventos.Remove(eventoEliminar);
+            context.SaveChanges();
+            
+        }
+
     }
     
 }
