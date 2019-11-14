@@ -16,7 +16,7 @@ namespace PlaceMyBetAPIWeb.Models
         public int usuarioID { get; set; }
 
         public Mercado Mercado { get; set; }
-        public Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; }            
 
 
         public Apuesta(int apuestaID, string mercado, string tipo, double cuota, double dinero,int mercadoID,int usuarioID)
@@ -46,25 +46,27 @@ namespace PlaceMyBetAPIWeb.Models
             return cuota;
         }
     }
-    /*
+    
     public class ApuestaDTO
     {
-        public ApuestaDTO(string mercado, string tipo, double cuota, double dinero, string email)
+        public ApuestaDTO(int usuarioID, int eventoID, string tipo, double cuota, double dinero)
         {
-            this.mercado = mercado;
+            this.usuarioID = usuarioID;
+            this.eventoID = eventoID;
             this.tipo = tipo;
             this.cuota = cuota;
             this.dinero = dinero;
-            this.emailUsuario = email;
         }
 
-        public string mercado { get; set; }
+        public int usuarioID { get; set; }
+        public int eventoID { get; set; }
         public string tipo { get; set; }
         public double cuota { get; set; }
         public double dinero { get; set; }
-        public string emailUsuario { get; set; }
     }
 
+
+    /*
     public class ApuestaDTOInsertar
     {
         public ApuestaDTOInsertar(string mercado, string tipo, double cuota, double dinero, int idMercado, int idUsuario)
