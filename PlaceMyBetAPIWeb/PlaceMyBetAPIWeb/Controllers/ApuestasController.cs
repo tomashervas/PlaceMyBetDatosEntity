@@ -34,15 +34,30 @@ namespace PlaceMyBetAPIWeb.Controllers
             List<ApuestaXEmailDTO> apuestas = repoApuestas.RecuperarXEmail(email);
             return apuestas;
         }*/
+        
+        // GET: api/Apuestas/5
 
+
+        /// <summary>
+        /// Ejercicio 3
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ApuestaUsuarioDTO Get(int id)
+        {
+            var repoApuesta = new ApuestasRepository();
+            ApuestaUsuarioDTO a = repoApuesta.RecuperarApuestaUsuarioDTO(id);
+            return a;
+        }
+        /*
         // GET: api/Apuestas/5
         public Apuesta Get(int id)
         {
             var repoApuesta = new ApuestasRepository();
-            Apuesta a = repoApuesta.RecuperarApuesta(id);
+            Apuesta a = repoApuesta.RecuperarApuestaUsuarioDTO(id);
             return a;
-        }
-       
+        }*/
+
         //POST: api/Apuestas
         //[Authorize]
         public void Post([FromBody]Apuesta apuesta)

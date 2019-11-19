@@ -66,6 +66,27 @@ namespace PlaceMyBetAPIWeb.Models
     }
 
 
+    /// <summary>
+    /// Ejercicio 3
+    /// </summary>
+    public class ApuestaUsuarioDTO
+    {
+        public ApuestaUsuarioDTO()
+        {
+        }
+
+        public ApuestaUsuarioDTO(string nombre, double cuota)
+        {
+            Nombre = nombre;
+            Cuota = cuota;
+        }
+
+        public string Nombre { get; set; }
+        public double Cuota { get; set; }
+
+
+    }
+
     /*
     public class ApuestaDTOInsertar
     {

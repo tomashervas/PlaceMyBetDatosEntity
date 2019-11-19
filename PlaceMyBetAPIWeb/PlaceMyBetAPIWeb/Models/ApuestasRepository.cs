@@ -30,26 +30,54 @@ namespace PlaceMyBetAPIWeb.Models
             }
             return apuestas;
         }
-
-        internal Apuesta RecuperarApuesta(int id)
+        /*
+        internal Apuesta RecuperarApuestaUsuarioDTO(int id)
         {
             Apuesta apuesta = new Apuesta();
+            //Apuesta ap = new Apuesta();
             using (PlaceMyBetContext context = new PlaceMyBetContext())
             {
+                context.Apuestas.Include(a => a.Usuario).ToList();
                 apuesta = context.Apuestas.Where(a => a.apuestaID == id).FirstOrDefault();
+                //apuesta = context.Apuestas.Select(a => TousuarioDTO(a)).FirstOrDefault();
             }
+            return apuesta;
+        }*/
+        
+            /// <summary>
+            /// Ejercicio 3
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+        internal ApuestaUsuarioDTO RecuperarApuestaUsuarioDTO(int id)
+        {
+            ApuestaUsuarioDTO apuesta = new ApuestaUsuarioDTO();
+            //Apuesta ap = new Apuesta();
+            using (PlaceMyBetContext context = new PlaceMyBetContext())
+            {
+                context.Apuestas.Include(a => a.Usuario).ToList();
+                context.Apuestas.Where(a => a.apuestaID == id).FirstOrDefault();
+                apuesta = context.Apuestas.Select(a => TousuarioDTO(a)).FirstOrDefault();
+            }
+            return apuesta;
+        }
+
+        public ApuestaUsuarioDTO TousuarioDTO(Apuesta a)
+        {
+            //string usuarioid = a.Usuario.nombre;
+
+            ApuestaUsuarioDTO apuesta = new ApuestaUsuarioDTO(a.Usuario.nombre, a.cuota);
 
             return apuesta;
         }
 
+        /// <summary>
+        /// Fin Ejercicio 3
+        /// </summary>
+        /// <param name="a"></param>
+
         internal void GuardarApuesta(Apuesta a)
         {
-            /*CultureInfo culInfo = new System.Globalization.CultureInfo("es-ES");
-            culInfo.NumberFormat.NumberDecimalSeparator = ".";
-            culInfo.NumberFormat.CurrencyDecimalSeparator = ".";
-            culInfo.NumberFormat.PercentDecimalSeparator = ".";
-            culInfo.NumberFormat.CurrencyDecimalSeparator = ".";
-            System.Threading.Thread.CurrentThread.CurrentCulture = culInfo;*/
 
             PlaceMyBetContext context = new PlaceMyBetContext();
             context.Apuestas.Add(a);
@@ -71,8 +99,6 @@ namespace PlaceMyBetAPIWeb.Models
             }
 
             repoMercado.ActualizarMercado(mercado);
-
-
         }
 
         public ApuestaDTO ToDTO(Apuesta a)
@@ -82,98 +108,10 @@ namespace PlaceMyBetAPIWeb.Models
             ApuestaDTO apuesta = new ApuestaDTO(a.usuarioID, eventoid, a.tipo, a.cuota, a.dinero);
 
             return apuesta;
-            /*
-            internal List<ApuestaDTO> RecuperarDTO()
-            {
-                MySqlConnection conexion = Conexion();
-                MySqlCommand comando = conexion.CreateCommand();
-                comando.CommandText = "SELECT mercado, tipo, cuota, dinero, email FROM apuestas, usuarios WHERE apuestas.IDUsuario = usuarios.ID";
-
-                try
-                {
-                    conexion.Open();
-                    MySqlDataReader res = comando.ExecuteReader();
-
-                    ApuestaDTO a = null;
-                    List<ApuestaDTO> apuestas = new List<ApuestaDTO>();
-                    while (res.Read())
-                    {
-                        a = new ApuestaDTO(res.GetString(0), res.GetString(1), res.GetDouble(2), res.GetDouble(3), res.GetString(4));
-                        apuestas.Add(a);
-                    }
-                    conexion.Close();
-                    return apuestas;
-                }
-                catch (MySqlException e)
-                {
-                    Console.WriteLine("Se ha producido un error de conexion");
-                    return null;
-                }
-                return null;
-            }*/
-            /*
-            internal List<ApuestaDTO> RecuperarXMercadoDTO(int idMercado)
-            {
-                /*MySqlConnection conexion = Conexion();
-                MySqlCommand comando = conexion.CreateCommand();
-                comando.CommandText = "SELECT mercado, tipo, cuota, dinero, email FROM apuestas, usuarios WHERE apuestas.IDUsuario = usuarios.ID and IDMercado=@idMercado";
-                comando.Parameters.AddWithValue("@idMercado", idMercado);
-                try
-                {
-                    conexion.Open();
-                    MySqlDataReader res = comando.ExecuteReader();
-
-                    ApuestaDTO a = null;
-                    List<ApuestaDTO> apuestas = new List<ApuestaDTO>();
-                    while (res.Read())
-                    {
-                        a = new ApuestaDTO(res.GetString(0), res.GetString(1), res.GetDouble(2), res.GetDouble(3), res.GetString(4));
-                        apuestas.Add(a);
-                    }
-                    conexion.Close();
-                    return apuestas;
-                }
-                catch (MySqlException e)
-                {
-                    Console.WriteLine("Se ha producido un error de conexion");
-                    return null;
-                }*/
-            // return null;
-            // }
-
-            //internal List<ApuestaXEmailDTO> RecuperarXEmail(string email)
-            //{
-            /*MySqlConnection conexion = Conexion();
-            MySqlCommand comando = conexion.CreateCommand();
-            comando.CommandText = "SELECT evento.ID, evento.local, evento.visitante, apuestas.mercado, apuestas.tipo, apuestas.cuota, apuestas.dinero FROM apuestas INNER JOIN mercado ON apuestas.IDMercado = mercado.ID INNER JOIN evento on evento.ID=mercado.IDEvento INNER JOIN usuarios on apuestas.IDUsuario = usuarios.ID AND usuarios.email=@email;";
-            comando.Parameters.AddWithValue("@email", email);
-            try
-            {
-                conexion.Open();
-                MySqlDataReader res = comando.ExecuteReader();
-
-                ApuestaXEmailDTO a = null;
-                List<ApuestaXEmailDTO> apuestas = new List<ApuestaXEmailDTO>();
-                while (res.Read())
-                {
-                    a = new ApuestaXEmailDTO(res.GetInt32(0), res.GetString(1), res.GetString(2), res.GetString(3), res.GetString(4), res.GetDouble(5), res.GetDouble(6));
-                    apuestas.Add(a);
-                }
-                conexion.Close();
-                return apuestas;
-            }
-            catch (MySqlException e)
-            {
-                Console.WriteLine("Se ha producido un error de conexion");
-                return null;
-            }*/
-            // return null;
-            //}
-
-
-
+            
         }
 
+        
     }
 }
 
